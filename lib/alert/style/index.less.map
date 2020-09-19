@@ -1,1 +1,1 @@
-{"version":3,"names":[],"mappings":"","sources":["alert/style/index.less"],"sourcesContent":["@popupPrefix: june-alert;\n\n.@{popupPrefix} {\n  padding: 20px;\n  background: white;\n  border-radius: 3px;\n  color: white;\n}"],"file":"index.less"}
+{"version":3,"names":[],"mappings":"","sources":["Alert/style/index.less"],"sourcesContent":["@popupPrefix: june-alert;\r\n\r\n.@{popupPrefix} {\r\n  padding: 20px;\r\n  background: white;\r\n  border-radius: 3px;\r\n  color: white;\r\n}"],"file":"index.less"}

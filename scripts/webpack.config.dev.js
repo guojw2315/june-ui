@@ -12,12 +12,12 @@ const postcssPresetEnv = require("postcss-preset-env");
 const resolve = dir => path.join(__dirname, ".", dir);
 const isProd = process.env.NODE_ENV === "production";
 const { version, name, description } = require("../package.json");
-const docsDir = path.join(process.cwd(), "docs");
+// const docsDir = path.join(process.cwd(), "docs");
 
 module.exports = {
   mode: "development",
   entry: { [name]: "./src/app.js" },
-  devtool: "#source-map",
+  // devtool: "#source-map",
   module: {
     rules: [
       {
@@ -65,6 +65,24 @@ module.exports = {
         ]
       },
       {
+        test: /\.less$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: "less-loader",
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
+      },
+      {
         test: /\.(jpe?g|png|gif|ogg|mp3)$/,
         use: [
           {
@@ -92,12 +110,12 @@ module.exports = {
     }),
     //预览
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "./public/index.html"), //指定要打包的html路径和文件名
+      template: path.join(__dirname, "../public/index.html"), //指定要打包的html路径和文件名
       filename: "./index.html" //指定输出路径和文件名
     }),
     new webpack.HotModuleReplacementPlugin(),
   ],
-  //压缩js
+  // 压缩js
   optimization: {
     namedModules: true,
     noEmitOnErrors: true,
@@ -118,5 +136,21 @@ module.exports = {
         canPrint: true
       })
     ]
+  },
+  
+  devServer: {
+    // contentBase: path.join(__dirname, "../public"),
+    // host: '0.0.0.0',
+    // hot: true,
+    disableHostCheck: true,
+    port: 8086,
+    proxy: {
+      "/api": {
+        "target": "http://dev.gateway.shjmall.cn",
+        "pathRewrite": {
+          "^/api": ""
+        }
+      }
+    }
   }
 };

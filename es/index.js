@@ -1,6 +1,8 @@
-import Alert from './alert';
-export { Alert };
+import Alert from './Alert';
+import FlowList from './FlowList';
+export { Alert, FlowList };
 export default {
-  Alert: Alert
+  Alert: Alert,
+  FlowList: FlowList
 };
 //# sourceMappingURL=index.js.map

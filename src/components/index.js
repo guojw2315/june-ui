@@ -1,5 +1,6 @@
-import Alert from './alert'
+import Alert from './Alert'
+import FlowList from './FlowList'
 
 
-export { Alert };
-export default { Alert };
+export { Alert, FlowList };
+export default { Alert, FlowList };
