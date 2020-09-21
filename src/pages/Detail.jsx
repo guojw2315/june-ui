@@ -1,13 +1,10 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 
-import FlowViewer from "../components/FlowViewer";
-import FlowRecord from '../components/FlowRecord'
-import "../components/FlowViewer/style";
-import "../components/FlowRecord/style";
+import { FlowViewer, FlowRecord, FlowTabs, TabPane } from "../components";
+import "../components/flow-viewer/style";
+import "../components/flow-record/style";
 
-import FlowTabs, { TabPane } from "../components/FlowTabs";
-
-import xmlDemo from "../mock/bpmn_demo";
+// import xmlDemo from "../mock/bpmn_demo";
 import { res1, res2 } from "../mock/bpmn_res";
 
 export default function Detail(props) {
@@ -18,7 +15,6 @@ export default function Detail(props) {
     TabsComponent,
     tabs = [],
     tabProps = {},
-    ...rest
   } = props;
   const [data, setData] = useState({});
 
@@ -59,7 +55,7 @@ export default function Detail(props) {
   ]);
 
   const _renderTabs = () => {
-    if (typeof props.renderTabs === "function") return props.renderTabs(props);
+    if (typeof renderTabs === "function") return renderTabs(props);
     const Tabs = TabsComponent || FlowTabs;
     return (
       <Tabs

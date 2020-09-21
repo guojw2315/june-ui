@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
-import FlowTabs, { TabPane } from "../FlowTabs";
-import "../FlowTabs/style";
+import FlowTabs, { TabPane } from "../flow-tabs";
+import "../flow-tabs/style";
 
 import RcTable from "rc-table";
 import "rc-table/assets/index.css";

@@ -1,25 +1,7 @@
 import React, { useEffect } from "react";
 import BpmnViewer from "bpmn-js/lib/NavigatedViewer";
 
-export default function FlowViewer({ data } = props) {
-  useEffect(() => {
-    // loadBpmnDemo('flow_container', { xml: xmlDemo });
-    // console.log(data)
-    if (data) {
-      loadFlowChar("flow_container", data);
-    }
-
-    return () => {};
-  }, [data]);
-
-  return (
-    <div className="flow-viewer">
-      <div id="flow_container"></div>
-    </div>
-  );
-}
-
-async function loadBpmnDemo(id, dataForm) {
+async function _loadBpmnDemo(id, dataForm) {
   let container = document.getElementById(id);
   if (!container) return;
   container.innerHTML = "";
@@ -100,20 +82,19 @@ export async function loadFlowChar(id, data) {
     }
 
     // 驳回节点 标红
-    let rejectNodeList = data?.rejectNodeId
-      ? data?.rejectNodeId.split(",")
-      : [];
+    // let rejectNodeList = data?.rejectNodeId
+    //   ? data?.rejectNodeId.split(",")
+    //   : [];
 
-    for (let i = 0; i < rejectNodeList.length; i++) {
-      canvas.addMarker(rejectNodeList[i], "errorHighlight");
-    }
+    // for (let i = 0; i < rejectNodeList.length; i++) {
+    //   canvas.addMarker(rejectNodeList[i], "errorHighlight");
+    // }
   } catch (err) {
     console.log(err.message, err.warnings);
   }
 }
 
 function genarateHtml(tasks, id) {
-  console.log(tasks, id);
   let content = [];
   for (let d of tasks) {
     if (d.nodeId === id) {
@@ -158,3 +139,23 @@ function bindEvent(id, event, listener) {
   let elmt = document.querySelector(`[data-element-id=${id}]`);
   elmt[event] = listener;
 }
+
+function FlowViewer({ data } = props) {
+  useEffect(() => {
+    // loadBpmnDemo('flow_container', { xml: xmlDemo });
+    // console.log(data)
+    if (data) {
+      loadFlowChar("flow_container", data);
+    }
+
+    return () => {};
+  }, [data]);
+
+  return (
+    <div className="flow-viewer">
+      <div id="flow_container"></div>
+    </div>
+  );
+}
+
+export default FlowViewer
