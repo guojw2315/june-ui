@@ -9,6 +9,7 @@ export default function FlowRecord({ data } = props) {
 
   return (
     <div className="flow-record">
+      record
     </div>
   );
 }

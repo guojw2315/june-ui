@@ -31,10 +31,6 @@ export default function Detail(props) {
     onTabChange && onTabChange(key);
   };
 
-  const _renderRecords = (tabItem, data) => {
-    return <div className="flow-records">records</div>;
-  };
-
   const _tabs = useRef([
     {
       name: "审批信息",
@@ -59,7 +55,7 @@ export default function Detail(props) {
     const Tabs = TabsComponent || FlowTabs;
     return (
       <Tabs
-        defaultActiveKey={_tabs?.current[2]?.key}
+        defaultActiveKey={_tabs?.current[1]?.key}
         onChange={_onTabChange}
         {...tabProps}
       >
