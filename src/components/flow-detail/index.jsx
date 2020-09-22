@@ -32,7 +32,6 @@ export default function FlowDetail(props) {
 
   useEffect(() => {
     document.onfullscreenchange = () => {
-      console.log(document.fullscreenElement === null)
       setFullScreen(document.fullscreenElement !== null);
     };
     return () => {};
