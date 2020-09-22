@@ -1,14 +1,17 @@
-
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { FlowViewer, FlowRecord, FlowTabs, TabPane } from "../index";
+import {
+  FlowViewer,
+  FlowRecord,
+  FlowTabs,
+  TabPane,
+  FlowActionButtons,
+} from "../index";
 import "../flow-viewer/style";
 import "../flow-record/style";
-import { Button, Row, Col, Input  } from 'antd'
+import "../flow-action-buttons/style";
+import { Button, Row, Col, Input } from "antd";
 
-import {
-  FullscreenOutlined,
-  
-} from '@ant-design/icons';
+import { FullscreenOutlined, FullscreenExitOutlined } from "@ant-design/icons";
 
 export default function FlowDetail(props) {
   const {
@@ -21,11 +24,30 @@ export default function FlowDetail(props) {
     data,
     tabs = [],
     tabProps = {},
+    ...rest
   } = props;
 
+  const [fullScreen, setFullScreen] = useState(false);
+  const el = useRef()
+
+  useEffect(() => {
+    document.onfullscreenchange = () => {
+      console.log(document.fullscreenElement === null)
+      setFullScreen(document.fullscreenElement !== null);
+    };
+    return () => {};
+  }, []);
+
   const _onTabChange = (key) => {
-    // console.log(key)
     onTabChange && onTabChange(key);
+  };
+
+  const _onFullScreen = () => {
+    el.current.requestFullscreen();
+  };
+
+  const _onExitFullScreen = () => {
+    document.exitFullscreen();
   };
 
   const _tabs = useRef([
@@ -48,47 +70,39 @@ export default function FlowDetail(props) {
   ]);
 
   const _renderApprove = () => {
-    if (typeof renderApprove === 'function' ) return renderApprove()
-   return <div className="flow-approve-detault">
-      <div className="flow-remark-label">备注说明：</div>
-      <div className="flow-remark-field">
-        <Input.TextArea placeholder="请输入" />
+    if (typeof renderApprove === "function") return renderApprove();
+    return (
+      <div className="flow-approve-detault">
+        <div className="flow-remark-label">备注说明：</div>
+        <div className="flow-remark-field">
+          <Input.TextArea placeholder="请输入" />
+        </div>
       </div>
-   </div>
-  }
+    );
+  };
 
   const _renderHeader = () => {
     if (typeof renderHeader === "function") return renderHeader(props);
-    return <div className="flow-detail-header">
-      <div className="flow-detail-top">
-        <div className="flow-detail-title">{data.title}</div>
-        <Button  icon={<FullscreenOutlined />} >全屏</Button>
-      </div>
-      <div className="flow-approve">
-        {_renderApprove()}
-      </div>
-      
-      <div className="flow-header-bottom">
-        <Row gutter={12}>
-          <Col>
-            <Button type="primary" ghost >
-              转办
+    return (
+      <div className="flow-detail-header">
+        <div className="flow-detail-top">
+          <div className="flow-detail-title">{data.title}</div>
+          {fullScreen ? (
+            <Button icon={<FullscreenOutlined />} onClick={_onExitFullScreen}>
+              退出
             </Button>
-          </Col>
-          <Col>
-            <Button type="primary" ghost>
-              同意
+          ) : (
+            <Button icon={<FullscreenExitOutlined />} onClick={_onFullScreen}>
+              全屏
             </Button>
-          </Col>
-          <Col>
-            <Button danger>
-              驳回
-            </Button>
-          </Col>
-        </Row>
+          )}
+        </div>
+        <div className="flow-approve">{_renderApprove()}</div>
+
+        <FlowActionButtons data={data} {...rest} />
       </div>
-    </div>
-  }
+    );
+  };
 
   const _renderTabs = () => {
     if (typeof renderTabs === "function") return renderTabs(props);
@@ -108,8 +122,10 @@ export default function FlowDetail(props) {
     );
   };
 
-  return <div className="flow-detail">
-    {_renderHeader()}
-    {_renderTabs()}
-  </div>;
+  return (
+    <div className="flow-detail" ref={el}>
+      {_renderHeader()}
+      {_renderTabs()}
+    </div>
+  );
 }

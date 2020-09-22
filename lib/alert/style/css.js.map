@@ -1,1 +1,1 @@
-{"version":3,"names":[],"mappings":"","sources":["Alert/style/index.js"],"sourcesContent":["import './index.less'"],"file":"css.js"}
+{"version":3,"names":[],"mappings":"","sources":["alert/style/index.js"],"sourcesContent":["import './index.less'"],"file":"css.js"}
