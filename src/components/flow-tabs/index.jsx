@@ -1,11 +1,14 @@
 import React from "react";
-import Tabs, { TabPane } from "rc-tabs";
+
+import { Tabs } from 'antd';
+
+const { TabPane } = Tabs
 
 export { TabPane };
 
 export default function FlowTabs({ children, ...rest }) {
   return (
-    <Tabs prefixCls="flow-tabs" {...rest}>
+    <Tabs {...rest}>
       {children}
     </Tabs>
   );
