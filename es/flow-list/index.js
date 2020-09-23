@@ -1,9 +1,11 @@
+import "antd/es/table/style/css";
+import _Table2 from "antd/es/table";
 import _extends from "@babel/runtime/helpers/esm/extends";
 import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/esm/objectWithoutPropertiesLoose";
 import React, { useEffect, useState, useRef } from "react";
 import FlowTabs, { TabPane } from "../flow-tabs";
 import "../flow-tabs/style";
-import { Table, Row, Col, Form, Input, Select } from 'antd';
+import api from '../api';
 export default function FlowList(props) {
   var _tabs$current$,
       _this = this;
@@ -148,7 +150,7 @@ export default function FlowList(props) {
       key: "2"
     }];
 
-    var _Table = TableComponent || Table;
+    var _Table = TableComponent || _Table2;
 
     return /*#__PURE__*/React.createElement("div", {
       className: "flow-list-main"

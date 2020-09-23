@@ -1,11 +1,14 @@
 import _extends from "@babel/runtime/helpers/esm/extends";
+import "antd/es/button/style/css";
+import _Button from "antd/es/button";
+import "antd/es/input/style/css";
+import _Input from "antd/es/input";
 import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/esm/objectWithoutPropertiesLoose";
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { FlowViewer, FlowRecord, FlowTabs, TabPane, FlowActionButtons, FlowTransferModal } from "../index";
 import "../flow-viewer/style";
 import "../flow-record/style";
 import "../flow-action-buttons/style";
-import { Button, Row, Col, Input, Modal, Select, Form } from "antd";
 import { FullscreenOutlined, FullscreenExitOutlined } from "@ant-design/icons";
 export default function FlowDetail(props) {
   var onTabChange = props.onTabChange,
@@ -103,7 +106,7 @@ export default function FlowDetail(props) {
       className: "flow-remark-label"
     }, "\u5907\u6CE8\u8BF4\u660E\uFF1A"), /*#__PURE__*/React.createElement("div", {
       className: "flow-remark-field"
-    }, /*#__PURE__*/React.createElement(Input.TextArea, {
+    }, /*#__PURE__*/React.createElement(_Input.TextArea, {
       placeholder: "\u8BF7\u8F93\u5165"
     })));
   };
@@ -116,10 +119,10 @@ export default function FlowDetail(props) {
       className: "flow-detail-top"
     }, /*#__PURE__*/React.createElement("div", {
       className: "flow-detail-title"
-    }, data.title), fullScreen ? /*#__PURE__*/React.createElement(Button, {
+    }, data.title), fullScreen ? /*#__PURE__*/React.createElement(_Button, {
       icon: /*#__PURE__*/React.createElement(FullscreenOutlined, null),
       onClick: _onExitFullScreen
-    }, "\u9000\u51FA") : /*#__PURE__*/React.createElement(Button, {
+    }, "\u9000\u51FA") : /*#__PURE__*/React.createElement(_Button, {
       icon: /*#__PURE__*/React.createElement(FullscreenExitOutlined, null),
       onClick: _onFullScreen
     }, "\u5168\u5C4F")), /*#__PURE__*/React.createElement("div", {

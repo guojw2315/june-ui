@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 
 import { Button, Input, Modal, Select, Form } from "antd";
+import api from '../api';
 
 const layout = {
   labelCol: { span: 4 },
@@ -12,8 +13,17 @@ const tailLayout = {
 };
 
 export default function FlowTransferModal(props) {
-  const { visible, onOk, onCancel } = props;
+  const { visible, request, onOk, onCancel } = props;
+
   const [form] = Form.useForm();
+  const [targetUserList, setTargetUserList] = useState([])
+
+  useEffect(() => {
+    if (visible) {
+    }
+    return () => {
+    }
+  }, [visible])
 
   const _onOk = async () => {
     try {
@@ -24,6 +34,18 @@ export default function FlowTransferModal(props) {
       console.log('Failed:', errorInfo);
     }
   }
+
+  const _onSearch = async (val) => {
+    try {
+      if (request) {
+        let res = await request.get(api.userList(val))
+        console.log(res)
+      }
+    } catch (errorInfo) {
+      console.log('Failed:', errorInfo);
+    }
+  }
+
   return (
     <Modal
       title="流程转办"
@@ -54,11 +76,14 @@ export default function FlowTransferModal(props) {
             // onChange={onChange}
             // onFocus={onFocus}
             // onBlur={onBlur}
-            // onSearch={onSearch}
+            onSearch={_onSearch}
           >
-            <Select.Option value="jack">Jack</Select.Option>
+            {
+              targetUserList.map((d, i) => <Select.Option key={i} value="jack">Jack</Select.Option>)
+            }
+            {/* <Select.Option value="jack">Jack</Select.Option>
             <Select.Option value="lucy">Lucy</Select.Option>
-            <Select.Option value="tom">Tom</Select.Option>
+            <Select.Option value="tom">Tom</Select.Option> */}
           </Select>
         </Form.Item>
 

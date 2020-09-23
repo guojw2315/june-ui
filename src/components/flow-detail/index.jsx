@@ -6,6 +6,7 @@ import {
   TabPane,
   FlowActionButtons,
   FlowTransferModal,
+  FlowFullScreen,
 } from "../index";
 import "../flow-viewer/style";
 import "../flow-record/style";
@@ -111,15 +112,7 @@ export default function FlowDetail(props) {
       <div className="flow-detail-header">
         <div className="flow-detail-top">
           <div className="flow-detail-title">{data.title}</div>
-          {fullScreen ? (
-            <Button icon={<FullscreenOutlined />} onClick={_onExitFullScreen}>
-              退出
-            </Button>
-          ) : (
-            <Button icon={<FullscreenExitOutlined />} onClick={_onFullScreen}>
-              全屏
-            </Button>
-          )}
+          <FlowFullScreen el={el}/>
         </div>
         <div className="flow-approve">{_renderApprove()}</div>
 

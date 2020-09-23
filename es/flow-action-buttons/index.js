@@ -1,5 +1,10 @@
+import "antd/es/row/style/css";
+import _Row from "antd/es/row";
+import "antd/es/button/style/css";
+import _Button from "antd/es/button";
+import "antd/es/col/style/css";
+import _Col from "antd/es/col";
 import React, { useEffect } from "react";
-import { Button, Row, Col } from "antd";
 export default function FlowActionButtons(props) {
   var onAgree = props.onAgree,
       onReject = props.onReject,
@@ -11,27 +16,27 @@ export default function FlowActionButtons(props) {
       addon = _props$addon === void 0 ? [] : _props$addon;
   return /*#__PURE__*/React.createElement("div", {
     className: "flow-action-buttons"
-  }, /*#__PURE__*/React.createElement(Row, {
+  }, /*#__PURE__*/React.createElement(_Row, {
     gutter: 12
   }, prefix.map(function (btn, i) {
-    return /*#__PURE__*/React.createElement(Col, {
+    return /*#__PURE__*/React.createElement(_Col, {
       key: i
     }, btn);
-  }), /*#__PURE__*/React.createElement(Col, null, /*#__PURE__*/React.createElement(Button, {
+  }), /*#__PURE__*/React.createElement(_Col, null, /*#__PURE__*/React.createElement(_Button, {
     type: "primary",
     ghost: true,
     onClick: onTransfer
-  }, "\u8F6C\u529E")), /*#__PURE__*/React.createElement(Col, null, /*#__PURE__*/React.createElement(Button, {
+  }, "\u8F6C\u529E")), /*#__PURE__*/React.createElement(_Col, null, /*#__PURE__*/React.createElement(_Button, {
     type: "primary",
     ghost: true,
     onClick: onAgree,
     disabled: data.completeFlag || data.approveFlag === false
-  }, "\u540C\u610F")), /*#__PURE__*/React.createElement(Col, null, /*#__PURE__*/React.createElement(Button, {
+  }, "\u540C\u610F")), /*#__PURE__*/React.createElement(_Col, null, /*#__PURE__*/React.createElement(_Button, {
     danger: true,
     onClick: onReject,
     disabled: data.completeFlag || data.approveFlag === false
   }, "\u9A73\u56DE")), addon.map(function (btn, i) {
-    return /*#__PURE__*/React.createElement(Col, {
+    return /*#__PURE__*/React.createElement(_Col, {
       key: i
     }, btn);
   })));

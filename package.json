@@ -1,6 +1,6 @@
 {
   "name": "june-ui",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "main": "lib/index.js",
   "module": "es/index.js",
   "unpkg": "dist/june-ui.min.js",

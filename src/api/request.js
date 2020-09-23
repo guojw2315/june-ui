@@ -1,7 +1,7 @@
 // 引入JS后，window下面会有一个$jutil 对象
 export const { setPosHeaders } = window.$jutil && window.$jutil || {}
 
-export const { get, post, setToken, instance, refreshToken } = window.$jutil && window.$jutil.createRequest({
+export const request = window.$jutil && window.$jutil.createRequest({
   baseURL: '/api'
 }, {
   refreshDisabled: true,
@@ -10,3 +10,5 @@ export const { get, post, setToken, instance, refreshToken } = window.$jutil && 
     setPosHeaders(instance)
   }
 }) || {}
+
+export const { get, post, setToken, instance, refreshToken } = request

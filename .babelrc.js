@@ -41,11 +41,8 @@ const plugins = [
     {
       useESModules
     }
-  ]
-];
-
-if (babel_env === "preview") {
-  plugins.push([
+  ],
+  [
     "import",
     {
       libraryName: "antd",
@@ -53,8 +50,8 @@ if (babel_env === "preview") {
       style: "css" // `style: true` 会加载 less 文件
     },
     "ant-design"
-  ]);
-}
+  ]
+];
 
 module.exports = {
   presets, plugins

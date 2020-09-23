@@ -1,8 +1,15 @@
+import "antd/es/modal/style/css";
+import _Modal from "antd/es/modal";
 import _extends from "@babel/runtime/helpers/esm/extends";
+import "antd/es/input/style/css";
+import _Input from "antd/es/input";
+import "antd/es/select/style/css";
+import _Select from "antd/es/select";
 import _regeneratorRuntime from "@babel/runtime/regenerator";
 import _asyncToGenerator from "@babel/runtime/helpers/esm/asyncToGenerator";
+import "antd/es/form/style/css";
+import _Form from "antd/es/form";
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { Button, Input, Modal, Select, Form } from "antd";
 var layout = {
   labelCol: {
     span: 4
@@ -22,7 +29,7 @@ export default function FlowTransferModal(props) {
       onOk = props.onOk,
       onCancel = props.onCancel;
 
-  var _Form$useForm = Form.useForm(),
+  var _Form$useForm = _Form.useForm(),
       form = _Form$useForm[0];
 
   var _onOk = /*#__PURE__*/function () {
@@ -61,14 +68,14 @@ export default function FlowTransferModal(props) {
     };
   }();
 
-  return /*#__PURE__*/React.createElement(Modal, {
+  return /*#__PURE__*/React.createElement(_Modal, {
     title: "\u6D41\u7A0B\u8F6C\u529E",
     visible: visible,
     onOk: _onOk,
     onCancel: onCancel,
     cancelText: "\u53D6\u6D88",
     okText: "\u786E\u5B9A"
-  }, /*#__PURE__*/React.createElement(Form, _extends({}, layout, {
+  }, /*#__PURE__*/React.createElement(_Form, _extends({}, layout, {
     form: form,
     name: "basic",
     initialValues: {
@@ -76,14 +83,14 @@ export default function FlowTransferModal(props) {
     } // onFinish={onFinish}
     // onFinishFailed={onFinishFailed}
 
-  }), /*#__PURE__*/React.createElement(Form.Item, {
+  }), /*#__PURE__*/React.createElement(_Form.Item, {
     label: "\u8F6C\u529E\u4EBA",
     name: "targetUserId",
     rules: [{
       required: true,
       message: "请选择转办人"
     }]
-  }, /*#__PURE__*/React.createElement(Select, {
+  }, /*#__PURE__*/React.createElement(_Select, {
     showSearch: true // style={{ width: 1 }}
     ,
     placeholder: "\u9009\u62E9\u8F6C\u529E\u4EBA",
@@ -92,20 +99,20 @@ export default function FlowTransferModal(props) {
     // onBlur={onBlur}
     // onSearch={onSearch}
 
-  }, /*#__PURE__*/React.createElement(Select.Option, {
+  }, /*#__PURE__*/React.createElement(_Select.Option, {
     value: "jack"
-  }, "Jack"), /*#__PURE__*/React.createElement(Select.Option, {
+  }, "Jack"), /*#__PURE__*/React.createElement(_Select.Option, {
     value: "lucy"
-  }, "Lucy"), /*#__PURE__*/React.createElement(Select.Option, {
+  }, "Lucy"), /*#__PURE__*/React.createElement(_Select.Option, {
     value: "tom"
-  }, "Tom"))), /*#__PURE__*/React.createElement(Form.Item, {
+  }, "Tom"))), /*#__PURE__*/React.createElement(_Form.Item, {
     label: "\u8F6C\u529E\u7406\u7531",
     name: "reason",
     rules: [{
       required: true,
       message: "请输入转办理由"
     }]
-  }, /*#__PURE__*/React.createElement(Input.TextArea, {
+  }, /*#__PURE__*/React.createElement(_Input.TextArea, {
     rows: 4,
     placeholder: "\u8BF7\u8F93\u5165\u8F6C\u529E\u7406\u7531"
   }))));
