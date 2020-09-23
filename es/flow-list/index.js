@@ -139,7 +139,6 @@ export default function FlowList(props) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              // console.log(key)
               setCurrentPage(1);
               setAcitve(key);
               if (typeof onTabChange === "function") onTabChange(key);
@@ -174,7 +173,6 @@ export default function FlowList(props) {
 
             case 3:
               res = _context2.sent;
-              // console.log(res)
               setOptions(res.data.data || []);
 
               try {} catch (e) {
@@ -404,6 +402,7 @@ export default function FlowList(props) {
         ghost: true
       }, "\u641C\u7D22");
     }))), /*#__PURE__*/React.createElement(_Table, _extends({
+      rowKey: "procInstId",
       loading: loading,
       columns: columns,
       dataSource: dataSource,
