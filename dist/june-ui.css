@@ -1,9 +1,3 @@
-.flow-action-buttons {
-  display: flex;
-  margin-top: 16px;
-  justify-content: flex-end;
-}
-
 .june-alert {
   padding: 20px;
   background: white;
@@ -11,6 +5,15 @@
   color: white;
 }
 
+.flow-action-buttons {
+  display: flex;
+  margin-top: 16px;
+  justify-content: flex-end;
+}
+
+.flow-detail {
+  background-color: #fff;
+}
 .flow-detail-header {
   padding-bottom: 20px;
 }

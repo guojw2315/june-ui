@@ -2,22 +2,28 @@ import React, { useEffect, useState, useRef } from "react";
 import FlowTabs, { TabPane } from "../flow-tabs";
 import "../flow-tabs/style";
 
-import RcTable from "rc-table";
-import "rc-table/assets/index.css";
+import { Table, Row, Col, Form, Input, Select } from 'antd';
 
 export default function FlowList(props) {
-  const { onTabChange, renderTabs, renderContent, TableComponent, TabsComponent, tabProps = {}, ...rest } = props;
+  const { onTabChange, renderTabs, renderContent, TableComponent, TabsComponent, request, listApi, tabProps = {}, ...rest } = props;
+
+  const _listApi = listApi || {
+    all: (currentPage, pageSize) => `/caas/osoBpmProcInst/completedProcPersonPage/${currentPage}/${pageSize}`,
+    wait: (currentPage, pageSize) => `/caas/osoBpmTask/waitTaskPage/${currentPage}/${pageSize}`,
+    accept: (currentPage, pageSize) => `/caas/osoBpmTask/completedTaskPage/${currentPage}/${pageSize}`,
+    done: (currentPage, pageSize) => `/caas/osoBpmProcInst/completedProcPersonPage/${currentPage}/${pageSize}`, // finishFlag: true
+  }
 
   const _onTabChange = (key) => {
     // console.log(key)
-    onTabChange && onTabChange(key)
+    if (typeof onTabChange === 'function') onTabChange(key)
   };
 
   const tabs = useRef([
-    { name: "全部（1/10）", key: "flow_all" },
-    { name: "待审批（1/10）", key: "flow_wait" },
-    { name: "已审批（1/10）", key: "flow_accept" },
-    { name: "已审批（1/10）", key: "flow_done" },
+    { name: "全部（??/??）", key: "all" },
+    { name: "待审批（??）", key: "wait" },
+    { name: "已审批（??）", key: "accept" },
+    { name: "已完结（??）", key: "done" },
   ]);
 
   const [active, setAcitve] = useState(tabs?.current[0]?.key);
@@ -108,11 +114,11 @@ export default function FlowList(props) {
       { name: "Rose", age: 36, address: "some where", key: "2" },
     ];
 
-    const Table = TableComponent || RcTable;
+    const _Table = TableComponent || Table;
     
     return (
       <div className="flow-list-main">
-        <Table columns={columns} data={data} {...rest} />
+        <_Table columns={columns} dataSource={data} {...rest} />
       </div>
     );
   };

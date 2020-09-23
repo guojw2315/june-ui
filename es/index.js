@@ -5,7 +5,8 @@ import FlowRecord from "./flow-record";
 import FlowViewer from "./flow-viewer";
 import FlowTabs, { TabPane } from "./flow-tabs";
 import FlowActionButtons from './flow-action-buttons';
-export { Alert, FlowTabs, TabPane, FlowList, FlowRecord, FlowViewer, FlowDetail, FlowActionButtons };
+import FlowTransferModal from './flow-transfer-modal';
+export { Alert, FlowTabs, TabPane, FlowList, FlowRecord, FlowViewer, FlowDetail, FlowActionButtons, FlowTransferModal };
 export default {
   Alert: Alert,
   FlowTabs: FlowTabs,
@@ -14,6 +15,7 @@ export default {
   FlowRecord: FlowRecord,
   FlowViewer: FlowViewer,
   FlowDetail: FlowDetail,
-  FlowActionButtons: FlowActionButtons
+  FlowActionButtons: FlowActionButtons,
+  FlowTransferModal: FlowTransferModal
 };
 //# sourceMappingURL=index.js.map

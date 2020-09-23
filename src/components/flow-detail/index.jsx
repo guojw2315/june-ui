@@ -5,11 +5,12 @@ import {
   FlowTabs,
   TabPane,
   FlowActionButtons,
+  FlowTransferModal,
 } from "../index";
 import "../flow-viewer/style";
 import "../flow-record/style";
 import "../flow-action-buttons/style";
-import { Button, Row, Col, Input } from "antd";
+import { Button, Row, Col, Input, Modal, Select, Form } from "antd";
 
 import { FullscreenOutlined, FullscreenExitOutlined } from "@ant-design/icons";
 
@@ -21,6 +22,9 @@ export default function FlowDetail(props) {
     renderInfo,
     renderHeader,
     TabsComponent,
+    onOkSuccess,
+    onRejectSuccess,
+    onTransferSuccess,
     data,
     tabs = [],
     tabProps = {},
@@ -28,7 +32,8 @@ export default function FlowDetail(props) {
   } = props;
 
   const [fullScreen, setFullScreen] = useState(false);
-  const el = useRef()
+  const [visible, setVisible] = useState(false);
+  const el = useRef();
 
   useEffect(() => {
     document.onfullscreenchange = () => {
@@ -37,23 +42,11 @@ export default function FlowDetail(props) {
     return () => {};
   }, []);
 
-  const _onTabChange = (key) => {
-    onTabChange && onTabChange(key);
-  };
-
-  const _onFullScreen = () => {
-    el.current.requestFullscreen();
-  };
-
-  const _onExitFullScreen = () => {
-    document.exitFullscreen();
-  };
-
   const _tabs = useRef([
     {
       name: "审批信息",
       key: "approve_form",
-      render: (tabItem, data) => renderInfo && renderInfo(),
+      render: renderInfo,
     },
     {
       name: "审批日志",
@@ -67,6 +60,38 @@ export default function FlowDetail(props) {
     },
     ...tabs,
   ]);
+
+  const _onTabChange = (key) => {
+    onTabChange && onTabChange(key);
+  };
+
+  const _onFullScreen = () => {
+    el.current.requestFullscreen();
+  };
+
+  const _onExitFullScreen = () => {
+    document.exitFullscreen();
+  };
+
+  const _onTransfer = () => {
+    setVisible(true);
+  };
+
+  const _onOk = () => {
+    if (typeof onOkSuccess === "function") onOkSuccess();
+  };
+
+  const _onReject = () => {
+    if (typeof onRejectSuccess === "function") onRejectSuccess();
+  };
+
+  const _onTransferOk = () => {
+    if (typeof onTransferSuccess === "function") onTransferSuccess();
+  };
+
+  const _onTransferCancel = () => {
+    setVisible(false);
+  };
 
   const _renderApprove = () => {
     if (typeof renderApprove === "function") return renderApprove();
@@ -98,7 +123,13 @@ export default function FlowDetail(props) {
         </div>
         <div className="flow-approve">{_renderApprove()}</div>
 
-        <FlowActionButtons data={data} {...rest} />
+        <FlowActionButtons
+          data={data}
+          onTransfer={_onTransfer}
+          onOk={_onOk}
+          onReject={_onReject}
+          {...rest}
+        />
       </div>
     );
   };
@@ -108,11 +139,11 @@ export default function FlowDetail(props) {
     const Tabs = TabsComponent || FlowTabs;
     return (
       <Tabs
-        defaultActiveKey={_tabs?.current[1]?.key}
+        defaultActiveKey={_tabs?.current[0]?.key}
         onChange={_onTabChange}
         {...tabProps}
       >
-        {_tabs.current?.map((d) => (
+        {_tabs.current?.filter(d => d.render)?.map((d) => (
           <TabPane tab={d.name} key={d.key}>
             {d.render && d.render(d, data)}
           </TabPane>
@@ -125,6 +156,11 @@ export default function FlowDetail(props) {
     <div className="flow-detail" ref={el}>
       {_renderHeader()}
       {_renderTabs()}
+      <FlowTransferModal
+        visible={visible}
+        onOk={_onTransferOk}
+        onCancel={_onTransferCancel}
+      />
     </div>
   );
 }

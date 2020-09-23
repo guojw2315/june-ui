@@ -3,8 +3,7 @@ import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/esm/objectWith
 import React, { useEffect, useState, useRef } from "react";
 import FlowTabs, { TabPane } from "../flow-tabs";
 import "../flow-tabs/style";
-import RcTable from "rc-table";
-import "rc-table/assets/index.css";
+import { Table, Row, Col, Form, Input, Select } from 'antd';
 export default function FlowList(props) {
   var _tabs$current$,
       _this = this;
@@ -14,27 +13,45 @@ export default function FlowList(props) {
       renderContent = props.renderContent,
       TableComponent = props.TableComponent,
       TabsComponent = props.TabsComponent,
+      request = props.request,
+      listApi = props.listApi,
       _props$tabProps = props.tabProps,
       tabProps = _props$tabProps === void 0 ? {} : _props$tabProps,
-      rest = _objectWithoutPropertiesLoose(props, ["onTabChange", "renderTabs", "renderContent", "TableComponent", "TabsComponent", "tabProps"]);
+      rest = _objectWithoutPropertiesLoose(props, ["onTabChange", "renderTabs", "renderContent", "TableComponent", "TabsComponent", "request", "listApi", "tabProps"]);
+
+  var _listApi = listApi || {
+    all: function all(currentPage, pageSize) {
+      return "/caas/osoBpmProcInst/completedProcPersonPage/" + currentPage + "/" + pageSize;
+    },
+    wait: function wait(currentPage, pageSize) {
+      return "/caas/osoBpmTask/waitTaskPage/" + currentPage + "/" + pageSize;
+    },
+    accept: function accept(currentPage, pageSize) {
+      return "/caas/osoBpmTask/completedTaskPage/" + currentPage + "/" + pageSize;
+    },
+    done: function done(currentPage, pageSize) {
+      return "/caas/osoBpmProcInst/completedProcPersonPage/" + currentPage + "/" + pageSize;
+    } // finishFlag: true
+
+  };
 
   var _onTabChange = function _onTabChange(key) {
     // console.log(key)
-    onTabChange && onTabChange(key);
+    if (typeof onTabChange === 'function') onTabChange(key);
   };
 
   var tabs = useRef([{
-    name: "全部（1/10）",
-    key: "flow_all"
+    name: "全部（??/??）",
+    key: "all"
   }, {
-    name: "待审批（1/10）",
-    key: "flow_wait"
+    name: "待审批（??）",
+    key: "wait"
   }, {
-    name: "已审批（1/10）",
-    key: "flow_accept"
+    name: "已审批（??）",
+    key: "accept"
   }, {
-    name: "已审批（1/10）",
-    key: "flow_done"
+    name: "已完结（??）",
+    key: "done"
   }]);
 
   var _useState = useState(tabs === null || tabs === void 0 ? void 0 : (_tabs$current$ = tabs.current[0]) === null || _tabs$current$ === void 0 ? void 0 : _tabs$current$.key),
@@ -130,12 +147,14 @@ export default function FlowList(props) {
       address: "some where",
       key: "2"
     }];
-    var Table = TableComponent || RcTable;
+
+    var _Table = TableComponent || Table;
+
     return /*#__PURE__*/React.createElement("div", {
       className: "flow-list-main"
-    }, /*#__PURE__*/React.createElement(Table, _extends({
+    }, /*#__PURE__*/React.createElement(_Table, _extends({
       columns: columns,
-      data: data
+      dataSource: data
     }, rest)));
   };
 

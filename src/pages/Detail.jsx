@@ -312,7 +312,7 @@ export default function Detail(props) {
       data={data}
       onTabChange={_onTabChange}
       // renderApprove={renderApprove}
-      renderInfo={renderInfo}
+      // renderInfo={renderInfo}
     />
   );
 }
