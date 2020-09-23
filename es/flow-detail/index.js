@@ -1,11 +1,9 @@
 import _extends from "@babel/runtime/helpers/esm/extends";
-import "antd/es/button/style/css";
-import _Button from "antd/es/button";
 import "antd/es/input/style/css";
 import _Input from "antd/es/input";
 import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/esm/objectWithoutPropertiesLoose";
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { FlowViewer, FlowRecord, FlowTabs, TabPane, FlowActionButtons, FlowTransferModal } from "../index";
+import { FlowViewer, FlowRecord, FlowTabs, TabPane, FlowActionButtons, FlowTransferModal, FlowFullScreen } from "../index";
 import "../flow-viewer/style";
 import "../flow-record/style";
 import "../flow-action-buttons/style";
@@ -119,13 +117,9 @@ export default function FlowDetail(props) {
       className: "flow-detail-top"
     }, /*#__PURE__*/React.createElement("div", {
       className: "flow-detail-title"
-    }, data.title), fullScreen ? /*#__PURE__*/React.createElement(_Button, {
-      icon: /*#__PURE__*/React.createElement(FullscreenOutlined, null),
-      onClick: _onExitFullScreen
-    }, "\u9000\u51FA") : /*#__PURE__*/React.createElement(_Button, {
-      icon: /*#__PURE__*/React.createElement(FullscreenExitOutlined, null),
-      onClick: _onFullScreen
-    }, "\u5168\u5C4F")), /*#__PURE__*/React.createElement("div", {
+    }, data.title), /*#__PURE__*/React.createElement(FlowFullScreen, {
+      el: el
+    })), /*#__PURE__*/React.createElement("div", {
       className: "flow-approve"
     }, _renderApprove()), /*#__PURE__*/React.createElement(FlowActionButtons, _extends({
       data: data,

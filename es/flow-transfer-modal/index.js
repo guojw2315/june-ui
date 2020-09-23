@@ -10,6 +10,7 @@ import _asyncToGenerator from "@babel/runtime/helpers/esm/asyncToGenerator";
 import "antd/es/form/style/css";
 import _Form from "antd/es/form";
 import React, { useEffect, useState, useRef, useCallback } from "react";
+import api from '../api';
 var layout = {
   labelCol: {
     span: 4
@@ -26,11 +27,22 @@ var tailLayout = {
 };
 export default function FlowTransferModal(props) {
   var visible = props.visible,
+      request = props.request,
       onOk = props.onOk,
       onCancel = props.onCancel;
 
   var _Form$useForm = _Form.useForm(),
       form = _Form$useForm[0];
+
+  var _useState = useState([]),
+      targetUserList = _useState[0],
+      setTargetUserList = _useState[1];
+
+  useEffect(function () {
+    if (visible) {}
+
+    return function () {};
+  }, [visible]);
 
   var _onOk = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
@@ -68,6 +80,49 @@ export default function FlowTransferModal(props) {
     };
   }();
 
+  var _onSearch = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(val) {
+      var res;
+      return _regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+
+              if (!request) {
+                _context2.next = 6;
+                break;
+              }
+
+              _context2.next = 4;
+              return request.get(api.userList(val));
+
+            case 4:
+              res = _context2.sent;
+              console.log(res);
+
+            case 6:
+              _context2.next = 11;
+              break;
+
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2["catch"](0);
+              console.log('Failed:', _context2.t0);
+
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[0, 8]]);
+    }));
+
+    return function _onSearch(_x) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
   return /*#__PURE__*/React.createElement(_Modal, {
     title: "\u6D41\u7A0B\u8F6C\u529E",
     visible: visible,
@@ -97,15 +152,14 @@ export default function FlowTransferModal(props) {
     optionFilterProp: "children" // onChange={onChange}
     // onFocus={onFocus}
     // onBlur={onBlur}
-    // onSearch={onSearch}
-
-  }, /*#__PURE__*/React.createElement(_Select.Option, {
-    value: "jack"
-  }, "Jack"), /*#__PURE__*/React.createElement(_Select.Option, {
-    value: "lucy"
-  }, "Lucy"), /*#__PURE__*/React.createElement(_Select.Option, {
-    value: "tom"
-  }, "Tom"))), /*#__PURE__*/React.createElement(_Form.Item, {
+    ,
+    onSearch: _onSearch
+  }, targetUserList.map(function (d, i) {
+    return /*#__PURE__*/React.createElement(_Select.Option, {
+      key: i,
+      value: "jack"
+    }, "Jack");
+  }))), /*#__PURE__*/React.createElement(_Form.Item, {
     label: "\u8F6C\u529E\u7406\u7531",
     name: "reason",
     rules: [{
