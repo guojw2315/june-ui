@@ -70,7 +70,6 @@ export default function FlowList(props) {
   }, [active, searchParams, pageSize, currentPage]);
 
   const _onTabChange = async (key) => {
-    // console.log(key)
     setCurrentPage(1);
     setAcitve(key)
     if (typeof onTabChange === "function") onTabChange(key);
@@ -79,7 +78,6 @@ export default function FlowList(props) {
   const _fetchOptions = async () => {
     if (request) {
       let res = await request.get(api.dictProcessList());
-      // console.log(res)
       setOptions(res.data.data || [])
       try {
       } catch (e) {
