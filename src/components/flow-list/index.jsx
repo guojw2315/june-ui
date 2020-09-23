@@ -261,6 +261,7 @@ export default function FlowList(props) {
           </Form>
         </div>
         <_Table
+          rowKey="procInstId"
           loading={loading}
           columns={columns}
           dataSource={dataSource}
