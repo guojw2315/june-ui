@@ -9,7 +9,7 @@
     "es",
     "lib"
   ],
-  "description": "",
+  "description": "流程模块公用组件库",
   "scripts": {
     "commit": "git-cz",
     "dev": "docz dev",
