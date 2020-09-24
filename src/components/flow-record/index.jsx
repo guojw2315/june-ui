@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 
-export default function FlowRecord({ data } = props) {
+export default function FlowRecord({ data = {}} = props) {
   useEffect(() => {
     if (data) {
-      console.log("flow record", data);
+      // console.log("flow record", data);
     }
     return () => {};
   }, [data]);

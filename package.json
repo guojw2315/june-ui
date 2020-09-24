@@ -85,7 +85,8 @@
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
     "antd": "^4.6.5",
-    "bpmn-js": "^7.3.0"
+    "bpmn-js": "^7.3.0",
+    "lodash.debounce": "^4.0.8"
   },
   "peerDependencies": {
     "react": ">=16.9.0",

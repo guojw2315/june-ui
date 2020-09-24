@@ -18,6 +18,7 @@ export default function FlowList(props) {
     TabsComponent,
     request,
     listApi,
+    onLinkClick,
     tabProps = {},
     ...rest
   } = props;
@@ -39,7 +40,7 @@ export default function FlowList(props) {
   });
 
   const tabs = useRef([
-    { name: "全部", key: "all", total: 0, value: 0},
+    { name: "全部", key: "all", total: 0, value: 0 },
     { name: "待审批", key: "wait", total: 0 },
     { name: "已审批", key: "accept", total: 0 },
     { name: "已完结", key: "done", total: 0 },
@@ -57,29 +58,28 @@ export default function FlowList(props) {
   const [options, setOptions] = useState([]); // 流程分类选项
   const [searchParams, setSearchParams] = useState({});
   const [loading, setLoading] = useState(false);
-  const [, setUpdate] = useState('')
+  const [, setUpdate] = useState("");
 
   useEffect(() => {
-     _fetchOptions();
+    _fetchOptions();
     return () => {};
   }, []);
 
   useEffect(() => {
     _fetchData(active, searchParams, currentPage, pageSize);
-   
   }, [active, searchParams, pageSize, currentPage]);
 
   const _onTabChange = async (key) => {
     setCurrentPage(1);
-    setAcitve(key)
+    setAcitve(key);
     if (typeof onTabChange === "function") onTabChange(key);
   };
 
   const _fetchOptions = async () => {
     if (request) {
-      let res = await request.get(api.dictProcessList());
-      setOptions(res.data.data || [])
       try {
+        let res = await request({ method: "GET", url: api.dictProcessList() });
+        setOptions(res.data.data || []);
       } catch (e) {
         console.log(e);
       }
@@ -97,20 +97,22 @@ export default function FlowList(props) {
         setLoading(true);
         const { url, ...other } = _listApi.current[key](page, size);
         // console.log(other)
-        let res = await request.post(url, {
-          data: {...params, ...other},
+        let res = await request({
+          method: "POST",
+          url,
+          data: { ...params, ...other },
         });
         const { records = [], total = 0 } = res.data.data;
 
-        let tab = tabs.current.find(d => d.key === key)
+        let tab = tabs.current.find((d) => d.key === key);
 
         if (tab) {
-          tab.total = total
+          tab.total = total;
         }
 
         // 设置全部 未审批数量
-        if (key === 'wait') {
-          tabs.current[0].value = total
+        if (key === "wait") {
+          tabs.current[0].value = total;
         }
 
         setDataSource(records);
@@ -145,12 +147,16 @@ export default function FlowList(props) {
         {...tabProps}
       >
         {tabs.current?.map((d) => (
-          <TabPane tab={`${d.name}（${d.value ? d.value + '/' : ''}${d.total}）`} key={d.key}></TabPane>
+          <TabPane
+            tab={`${d.name}（${d.value ? d.value + "/" : ""}${d.total}）`}
+            key={d.key}
+          ></TabPane>
         ))}
       </Tabs>
     );
   };
 
+  //TODO 待审批、已审批 字段 不同，待修改
   const _renderContent = () => {
     if (typeof props.renderContent === "function")
       return props.renderContent(props);
@@ -215,7 +221,7 @@ export default function FlowList(props) {
         width: 80,
         // align: 'right',
         render: (...args) => (
-          <a onClick={props?.onClick?.bind(this, ...args)}>查看</a>
+          <a onClick={onLinkClick?.bind(this, ...args)}>查看</a>
         ),
       },
     ];
@@ -238,7 +244,11 @@ export default function FlowList(props) {
             >
               <Select placeholder="请选择分类" style={{ minWidth: 192 }}>
                 {options.map((d, i) => {
-                  return <Select.Option key={i} value={d.dataValue}>{d.name}</Select.Option>
+                  return (
+                    <Select.Option key={i} value={d.dataValue}>
+                      {d.name}
+                    </Select.Option>
+                  );
                 })}
               </Select>
             </Form.Item>
@@ -270,6 +280,7 @@ export default function FlowList(props) {
             total,
             pageSize,
             onChange: _onPageChange,
+            onShowSizeChange: _onPageChange,
           }}
           {...rest}
         />

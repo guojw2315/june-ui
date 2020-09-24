@@ -37,3 +37,15 @@ $ nrm use shj
 ### 组件列表
 
 ### 示例
+
+> FlowList
+
+```javascript
+
+```
+
+> FlowDetail
+
+```javascript
+
+```

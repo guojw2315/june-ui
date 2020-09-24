@@ -13,6 +13,8 @@ let api =  {
   dictProcessList: () => api.dictList('flowDefine'),
 
   userList: (keyWord) => `/caas/user/list?keyWord=${keyWord}`,
+
+  taskTransfer: () => `/caas/osoBpmTask/transferTask`,
 }
 
 

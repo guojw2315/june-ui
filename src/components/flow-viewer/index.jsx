@@ -63,7 +63,11 @@ export async function loadFlowChar(id, data) {
 
     // 历史任务 置灰
     for (let item of historyTasks) {
-      canvas.addMarker(item.nodeId, "endHighlight");
+      if (item.state === 'reject') {
+        canvas.addMarker(item.nodeId, "errorHighlight");
+      } else {
+        canvas.addMarker(item.nodeId, "endHighlight");
+      }
       bindOverlays.call(
         overlays,
         item.nodeId,
@@ -99,10 +103,10 @@ function genarateHtml(tasks, id) {
   for (let d of tasks) {
     if (d.nodeId === id) {
       content.push(`<div class="note-card">
-        <p>执行人：${d?.assigneeUserName || ""}</p>
+        <p>执行人：${d?.assigneeUserName || d?.userNames || ""}</p>
         <p>开始时间：${d?.createdTime || ""}</p>
-        <p>结束时间：${d?.endTime || ""}</p>
-        <p>意见：${d?.stateDesc || ""}</p>
+        ${d?.endTime ? `<p>结束时间：${d?.endTime}</p>` : ``}
+        ${d?.stateDesc ? `<p>意见：${d?.stateDesc}</p>` : ``}
       </div>`);
     }
   }
