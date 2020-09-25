@@ -1,5 +1,7 @@
 import Alert from "./alert";
+import CommonTable from './common-table';
 import FlowList from "./flow-list";
+import FlowListOwn from "./flow-list-own";
 import FlowDetail from "./flow-detail";
 import FlowRecord from "./flow-record";
 import FlowViewer from "./flow-viewer";
@@ -10,9 +12,11 @@ import FlowFullScreen from "./flow-fullscreen";
 
 export {
   Alert,
+  CommonTable,
   FlowTabs,
   TabPane,
   FlowList,
+  FlowListOwn,
   FlowRecord,
   FlowViewer,
   FlowDetail,
@@ -20,11 +24,14 @@ export {
   FlowTransferModal,
   FlowFullScreen,
 };
+
 export default {
   Alert,
+  CommonTable,
   FlowTabs,
   TabPane,
   FlowList,
+  FlowListOwn,
   FlowRecord,
   FlowViewer,
   FlowDetail,

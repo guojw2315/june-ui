@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import FlowTabs, { TabPane } from "../flow-tabs";
+import FlowSearch from "../flow-list-section/flow-search";
 import { FlowFullScreen } from "../index";
+import { CommonTable } from "../index";
 
 import "./style/index";
+import "../flow-list-section/style";
 
 import { Table, Row, Col, Form, Input, Select, Button } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+
 
 import api from "../api";
 
@@ -19,6 +22,7 @@ export default function FlowList(props) {
     request,
     listApi,
     onLinkClick,
+    data,
     tabProps = {},
     ...rest
   } = props;
@@ -46,18 +50,12 @@ export default function FlowList(props) {
     { name: "已完结", key: "done", total: 0 },
   ]);
 
-  const tabTotal = useRef({});
-
   const el = useRef();
   const [form] = Form.useForm();
   const [active, setAcitve] = useState(tabs?.current[0]?.key);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [total, setTotal] = useState(0);
-  const [dataSource, setDataSource] = useState([]);
   const [options, setOptions] = useState([]); // 流程分类选项
   const [searchParams, setSearchParams] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [rowKey, setRowKey] = useState("procInstId");
   const [, setUpdate] = useState("");
 
   useEffect(() => {
@@ -65,13 +63,9 @@ export default function FlowList(props) {
     return () => {};
   }, []);
 
-  useEffect(() => {
-    _fetchData(active, searchParams, currentPage, pageSize);
-  }, [active, searchParams, pageSize, currentPage]);
-
   const _onTabChange = async (key) => {
-    setCurrentPage(1);
     setAcitve(key);
+    setSearchParams({ ...searchParams });
     if (typeof onTabChange === "function") onTabChange(key);
   };
 
@@ -86,54 +80,24 @@ export default function FlowList(props) {
     }
   };
 
-  const _fetchData = async (
-    key,
-    params = searchParams,
-    page = currentPage,
-    size = pageSize
-  ) => {
-    if (request) {
-      try {
-        setLoading(true);
-        const { url, ...other } = _listApi.current[key](page, size);
-        // console.log(other)
-        let res = await request({
-          method: "POST",
-          url,
-          data: { ...params, ...other },
-        });
-        const { records = [], total = 0 } = res.data.data;
+  const _afterFetchData = ({ total, records } = {}) => {
+    let tab = tabs.current.find((d) => d.key === active);
 
-        let tab = tabs.current.find((d) => d.key === key);
-
-        if (tab) {
-          tab.total = total;
-        }
-
-        // 设置全部 未审批数量
-        if (key === "wait") {
-          tabs.current[0].value = total;
-        }
-
-        setDataSource(records);
-        setTotal(total);
-        setLoading(false);
-        // console.log("flow-list: ", res);
-      } catch (e) {
-        setLoading(false);
-        console.log("flow-list fetch failed;", e);
-      }
+    if (tab) {
+      tab.total = total;
     }
-  };
 
-  const _onPageChange = (page, pageSize) => {
-    setCurrentPage(page);
-    setPageSize(pageSize);
+    // 设置全部 未审批数量
+    if (active === "wait") {
+      tabs.current[0].value = total;
+    }
+
+    setRowKey(/^wait$|^accept$/g.test(active) ? "taskId" : "procInstId");
+    setUpdate(new Date().getTime());
   };
 
   const _onSearch = (values) => {
     setSearchParams(values);
-    setCurrentPage(1);
   };
 
   const _renderTabs = () => {
@@ -156,17 +120,17 @@ export default function FlowList(props) {
     );
   };
 
-  //TODO 待审批、已审批 字段 不同，待修改
+  const _renderSearch = () => {
+    if (typeof props.renderSearch === "function")
+      return props.renderSearch(props);
+    return <FlowSearch onSearch={_onSearch} options={options} />;
+  };
+
   const _renderContent = () => {
     if (typeof props.renderContent === "function")
       return props.renderContent(props);
-    const columns = [
-      {
-        title: "流程标题",
-        dataIndex: "title",
-        key: "title",
-        width: 200,
-      },
+
+    const column1 = [
       {
         title: "状态",
         dataIndex: "stateDesc",
@@ -211,7 +175,51 @@ export default function FlowList(props) {
         key: "procEndTime",
         width: 200,
       },
+    ];
 
+    const column2 = [
+      {
+        title: "处理人姓名",
+        dataIndex: "auditorUserNames",
+        key: "auditorUserNames",
+        width: 100,
+        cell: (text, record) =>
+          record?.auditorUserNames || record?.assigneeUserName,
+      },
+      {
+        title: "业务的key",
+        dataIndex: "businessKey",
+        key: "businessKey",
+        width: 200,
+      },
+      {
+        title: "创建日期",
+        dataIndex: "taskCreateTime",
+        key: "taskCreateTime",
+        width: 200,
+      },
+      {
+        title: "完成日期",
+        dataIndex: "taskEndDate",
+        key: "taskEndDate",
+        width: 200,
+      },
+      {
+        title: "流程Key",
+        dataIndex: "procDefKey",
+        key: "procDefKey",
+        width: 200,
+      },
+    ];
+
+    const columns = (col = []) => [
+      {
+        title: "流程标题",
+        dataIndex: "title",
+        key: "title",
+        width: 200,
+      },
+      ...col,
       {
         title: "操作",
         dataIndex: "",
@@ -226,70 +234,36 @@ export default function FlowList(props) {
       },
     ];
 
-    const _Table = TableComponent || Table;
-
     return (
       <div className="flow-list-main">
-        <div className="flow-search-bar">
-          <Form
-            form={form}
-            name="horizontal_login"
-            layout="inline"
-            onFinish={_onSearch}
-          >
-            <Form.Item
-              label="流程分类"
-              name="processDefKey"
-              // rules={[{ required: true, message: "Please input your username!" }]}
-            >
-              <Select placeholder="请选择分类" style={{ minWidth: 192 }}>
-                {options.map((d, i) => {
-                  return (
-                    <Select.Option key={i} value={d.dataValue}>
-                      {d.name}
-                    </Select.Option>
-                  );
-                })}
-              </Select>
-            </Form.Item>
+        {active === "all" || active === "done" ? (
+          <CommonTable
+            rowKey="procInstId"
+            columns={columns(column1)}
+            request={request}
+            queryParams={searchParams}
+            api={({ page, size } = {}) => _listApi.current[active](page, size)}
+            afterFetchData={_afterFetchData}
+          />
+        ) : null}
 
-            <Form.Item
-              label="标题"
-              name="title"
-              // rules={[{ required: true, message: "Please input your password!" }]}
-            >
-              <Input suffix={<SearchOutlined />} placeholder="关键字搜索" />
-            </Form.Item>
-
-            <Form.Item shouldUpdate={true} noStyle>
-              {() => (
-                <Button type="primary" htmlType="submit" ghost>
-                  搜索
-                </Button>
-              )}
-            </Form.Item>
-          </Form>
-        </div>
-        <_Table
-          rowKey="procInstId"
-          loading={loading}
-          columns={columns}
-          dataSource={dataSource}
-          pagination={{
-            current: currentPage,
-            total,
-            pageSize,
-            onChange: _onPageChange,
-            onShowSizeChange: _onPageChange,
-          }}
-          {...rest}
-        />
+        {active === "wait" || active === "accept" ? (
+          <CommonTable
+            rowKey="taskId"
+            columns={columns(column2)}
+            request={request}
+            queryParams={searchParams}
+            api={({ page, size } = {}) => _listApi.current[active](page, size)}
+            afterFetchData={_afterFetchData}
+          />
+        ) : null}
       </div>
     );
   };
   return (
     <div className="flow-list" ref={el}>
       {_renderTabs()}
+      {_renderSearch()}
       {_renderContent()}
     </div>
   );
