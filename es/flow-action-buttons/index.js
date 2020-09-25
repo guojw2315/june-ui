@@ -9,7 +9,9 @@ export default function FlowActionButtons(props) {
   var onAgree = props.onAgree,
       onReject = props.onReject,
       onTransfer = props.onTransfer,
-      data = props.data,
+      canApprove = props.canApprove,
+      _props$data = props.data,
+      data = _props$data === void 0 ? {} : _props$data,
       _props$prefix = props.prefix,
       prefix = _props$prefix === void 0 ? [] : _props$prefix,
       _props$addon = props.addon,
@@ -25,16 +27,17 @@ export default function FlowActionButtons(props) {
   }), /*#__PURE__*/React.createElement(_Col, null, /*#__PURE__*/React.createElement(_Button, {
     type: "primary",
     ghost: true,
-    onClick: onTransfer
+    onClick: onTransfer,
+    disabled: !canApprove
   }, "\u8F6C\u529E")), /*#__PURE__*/React.createElement(_Col, null, /*#__PURE__*/React.createElement(_Button, {
     type: "primary",
     ghost: true,
     onClick: onAgree,
-    disabled: data.completeFlag || data.approveFlag === false
+    disabled: !canApprove || data.completeFlag || data.approveFlag === false
   }, "\u540C\u610F")), /*#__PURE__*/React.createElement(_Col, null, /*#__PURE__*/React.createElement(_Button, {
     danger: true,
     onClick: onReject,
-    disabled: data.completeFlag || data.approveFlag === false
+    disabled: !canApprove || data.completeFlag || data.approveFlag === false
   }, "\u9A73\u56DE")), addon.map(function (btn, i) {
     return /*#__PURE__*/React.createElement(_Col, {
       key: i

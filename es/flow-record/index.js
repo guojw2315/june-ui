@@ -3,11 +3,11 @@ export default function FlowRecord(_temp) {
   var _data$historyTasks;
 
   var _ref = _temp === void 0 ? props : _temp,
-      data = _ref.data;
+      _ref$data = _ref.data,
+      data = _ref$data === void 0 ? {} : _ref$data;
 
   useEffect(function () {
-    if (data) {
-      console.log("flow record", data);
+    if (data) {// console.log("flow record", data);
     }
 
     return function () {};

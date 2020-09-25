@@ -13,8 +13,16 @@ var api = {
   dictProcessList: function dictProcessList() {
     return api.dictList('flowDefine');
   },
+  // 流程分类 枚举
+  dictProcessOwnKeys: function dictProcessOwnKeys() {
+    return "/caas/osoBpmProcInst/listInterestKeys";
+  },
+  // 流程分类 枚举
   userList: function userList(keyWord) {
     return "/caas/user/list?keyWord=" + keyWord;
+  },
+  taskTransfer: function taskTransfer() {
+    return "/caas/osoBpmTask/transferTask";
   }
 };
 export default api;

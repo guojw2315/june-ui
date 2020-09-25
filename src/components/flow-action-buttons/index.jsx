@@ -22,7 +22,7 @@ export default function FlowActionButtons(props) {
             type="primary"
             ghost
             onClick={onTransfer}
-            // disabled={!canApprove}
+            disabled={!canApprove}
           >
             转办
           </Button>

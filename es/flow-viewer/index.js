@@ -121,7 +121,13 @@ function _loadFlowChar() {
 
             for (_iterator2 = _createForOfIteratorHelperLoose(historyTasks); !(_step2 = _iterator2()).done;) {
               item = _step2.value;
-              canvas.addMarker(item.nodeId, "endHighlight");
+
+              if (item.state === 'reject') {
+                canvas.addMarker(item.nodeId, "errorHighlight");
+              } else {
+                canvas.addMarker(item.nodeId, "endHighlight");
+              }
+
               bindOverlays.call(overlays, item.nodeId, genarateHtml(historyTasks, item.nodeId));
             } //当前节点 高亮
 
@@ -164,7 +170,7 @@ function genarateHtml(tasks, id) {
     var d = _step.value;
 
     if (d.nodeId === id) {
-      content.push("<div class=\"note-card\">\n        <p>\u6267\u884C\u4EBA\uFF1A" + ((d === null || d === void 0 ? void 0 : d.assigneeUserName) || "") + "</p>\n        <p>\u5F00\u59CB\u65F6\u95F4\uFF1A" + ((d === null || d === void 0 ? void 0 : d.createdTime) || "") + "</p>\n        <p>\u7ED3\u675F\u65F6\u95F4\uFF1A" + ((d === null || d === void 0 ? void 0 : d.endTime) || "") + "</p>\n        <p>\u610F\u89C1\uFF1A" + ((d === null || d === void 0 ? void 0 : d.stateDesc) || "") + "</p>\n      </div>");
+      content.push("<div class=\"note-card\">\n        <p>\u6267\u884C\u4EBA\uFF1A" + ((d === null || d === void 0 ? void 0 : d.assigneeUserName) || (d === null || d === void 0 ? void 0 : d.userNames) || "") + "</p>\n        <p>\u5F00\u59CB\u65F6\u95F4\uFF1A" + ((d === null || d === void 0 ? void 0 : d.createdTime) || "") + "</p>\n        " + ((d === null || d === void 0 ? void 0 : d.endTime) ? "<p>\u7ED3\u675F\u65F6\u95F4\uFF1A" + (d === null || d === void 0 ? void 0 : d.endTime) + "</p>" : "") + "\n        " + ((d === null || d === void 0 ? void 0 : d.stateDesc) ? "<p>\u610F\u89C1\uFF1A" + (d === null || d === void 0 ? void 0 : d.stateDesc) + "</p>" : "") + "\n      </div>");
     }
   }
 
