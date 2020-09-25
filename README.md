@@ -12,11 +12,11 @@ $ yarn add june-ui --registry=http://47.108.137.67:4873/
 ### 更新
 > npm
 ```shell
-$ npm update june-ui --registry=http://47.108.137.67:4873/
+$ npm update june-ui@latest --registry=http://47.108.137.67:4873/
 ```
 > yarn
 ```shell
-$ yarn upgrade june-ui --registry=http://47.108.137.67:4873/
+$ yarn upgrade june-ui@latest --registry=http://47.108.137.67:4873/
 ```
   
 ### 更多用法
@@ -143,6 +143,7 @@ export default FlowDetailPage function () {
 | id  | 流程实例ID | string | / |
 | request  | 请求方法 | function | / |
 | renderInfo | 基本信息渲染方法 | function | / |
+| renderApprove | 审批表单渲染方法 | function | / |
 | onTransfer | 转办回调 | function | / |
 | onAgree | 同意回调 | function | / |
 | onReject | 驳回回调 | function | / |
