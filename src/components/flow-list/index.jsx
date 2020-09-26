@@ -183,8 +183,9 @@ export default function FlowList(props) {
         dataIndex: "auditorUserNames",
         key: "auditorUserNames",
         width: 100,
-        cell: (text, record) =>
-          record?.auditorUserNames || record?.assigneeUserName,
+        render: (text, record) => {
+          return record?.auditorUserNames || record?.assigneeUserName
+        }
       },
       {
         title: "业务的key",

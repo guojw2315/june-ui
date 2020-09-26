@@ -108,7 +108,12 @@ export default function FlowDetail(props) {
         let res = await request({ method: "GET", url });
         let d = res?.data?.data;
         setDetailData(d);
-        setTasks(d?.runTimeTasks?.filter((item) => item.approveFlag) || []);
+        // console.log(d?.runTimeTasks?.filter((item) => item.approveFlag))
+        let _task = d?.runTimeTasks?.filter((item) => item.approveFlag) || []
+        if (_task.length === 1) {
+          form.setFieldsValue({ taskId: _task[0].taskId });
+        }
+        setTasks(_task);
       } catch (e) {
         console.log(e);
       } finally {
@@ -249,6 +254,7 @@ export default function FlowDetail(props) {
           >
             <Select
               // mode="multiple"
+              disabled={tasks.length <= 1}
               placeholder="选择流程节点"
               // onChange={onChange}
             >
@@ -318,8 +324,8 @@ export default function FlowDetail(props) {
   return (
     <div className="flow-detail" ref={el}>
       <Spin spinning={loading}>
-        {/* {detailData.approveFlag === false ? null : _renderHeader()} */}
-        {_renderHeader()}
+        {detailData.approveFlag === false ? null : _renderHeader()}
+        {/* {_renderHeader()} */}
         {_renderTabs()}
         <FlowTransferModal
           visible={visible}

@@ -271,7 +271,7 @@ export default function FlowList(props) {
       dataIndex: "auditorUserNames",
       key: "auditorUserNames",
       width: 100,
-      cell: function cell(text, record) {
+      render: function render(text, record) {
         return (record === null || record === void 0 ? void 0 : record.auditorUserNames) || (record === null || record === void 0 ? void 0 : record.assigneeUserName);
       }
     }, {

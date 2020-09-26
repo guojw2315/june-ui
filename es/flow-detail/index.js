@@ -132,14 +132,14 @@ export default function FlowDetail(props) {
 
   var _fetchData = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(id) {
-      var _res$data, _d$runTimeTasks, _detailApi$current$ge, url, res, d;
+      var _res$data, _d$runTimeTasks, _detailApi$current$ge, url, res, d, _task;
 
       return _regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               if (!request) {
-                _context.next = 18;
+                _context.next = 20;
                 break;
               }
 
@@ -155,29 +155,38 @@ export default function FlowDetail(props) {
             case 6:
               res = _context.sent;
               d = res === null || res === void 0 ? void 0 : (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data;
-              setDetailData(d);
-              setTasks((d === null || d === void 0 ? void 0 : (_d$runTimeTasks = d.runTimeTasks) === null || _d$runTimeTasks === void 0 ? void 0 : _d$runTimeTasks.filter(function (item) {
+              setDetailData(d); // console.log(d?.runTimeTasks?.filter((item) => item.approveFlag))
+
+              _task = (d === null || d === void 0 ? void 0 : (_d$runTimeTasks = d.runTimeTasks) === null || _d$runTimeTasks === void 0 ? void 0 : _d$runTimeTasks.filter(function (item) {
                 return item.approveFlag;
-              })) || []);
-              _context.next = 15;
+              })) || [];
+
+              if (_task.length === 1) {
+                form.setFieldsValue({
+                  taskId: _task[0].taskId
+                });
+              }
+
+              setTasks(_task);
+              _context.next = 17;
               break;
 
-            case 12:
-              _context.prev = 12;
+            case 14:
+              _context.prev = 14;
               _context.t0 = _context["catch"](1);
               console.log(_context.t0);
 
-            case 15:
-              _context.prev = 15;
+            case 17:
+              _context.prev = 17;
               setLoading(false);
-              return _context.finish(15);
+              return _context.finish(17);
 
-            case 18:
+            case 20:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 12, 15, 18]]);
+      }, _callee, null, [[1, 14, 17, 20]]);
     }));
 
     return function _fetchData(_x) {
@@ -455,6 +464,7 @@ export default function FlowDetail(props) {
       }]
     }, /*#__PURE__*/React.createElement(_Select, {
       // mode="multiple"
+      disabled: tasks.length <= 1,
       placeholder: "\u9009\u62E9\u6D41\u7A0B\u8282\u70B9" // onChange={onChange}
 
     }, tasks === null || tasks === void 0 ? void 0 : tasks.map(function (d, i) {
@@ -518,7 +528,7 @@ export default function FlowDetail(props) {
     ref: el
   }, /*#__PURE__*/React.createElement(_Spin, {
     spinning: loading
-  }, _renderHeader(), _renderTabs(), /*#__PURE__*/React.createElement(FlowTransferModal, {
+  }, detailData.approveFlag === false ? null : _renderHeader(), _renderTabs(), /*#__PURE__*/React.createElement(FlowTransferModal, {
     visible: visible,
     remark: remark,
     setRemark: setRemark,
