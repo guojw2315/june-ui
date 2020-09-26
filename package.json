@@ -26,7 +26,7 @@
     "build:all": "yarn build:umd && yarn build:commonjs && yarn build:es && yarn build:css"
   },
   "keywords": [],
-  "author": "guojunwei <junewill2019@qq.com> (https://github.com/guojw2315)",
+  "author": "guojunwei <junewill2019@qq.com> (https://github.com/june2315)",
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.11.6",
