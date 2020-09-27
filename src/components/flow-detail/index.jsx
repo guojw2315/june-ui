@@ -149,6 +149,7 @@ export default function FlowDetail(props) {
     // console.log("onOk");
     try {
       const values = await form.validateFields();
+      console.log(values)
       modal.confirm({
         ..._modalConfig(),
         content: "同意该流程?",
@@ -235,6 +236,7 @@ export default function FlowDetail(props) {
 
   const _renderApprove = () => {
     if (typeof renderApprove === "function") return renderApprove();
+    const hideNodeSelect =  tasks.length <= 1;
     return (
       <div className="flow-approve-detault">
         <Form
@@ -248,13 +250,14 @@ export default function FlowDetail(props) {
           onValuesChange={_onRemarkChange}
         >
           <Form.Item
+            style={{display: hideNodeSelect ? 'none' : ''}}
             label="流程节点"
             name="taskId"
-            rules={[{ required: true, message: "请选择流程节点" }]}
+            rules={[{ required: !hideNodeSelect, message: "请选择流程节点" }]}
           >
             <Select
               // mode="multiple"
-              disabled={tasks.length <= 1}
+              disabled={hideNodeSelect}
               placeholder="选择流程节点"
               // onChange={onChange}
             >
