@@ -32,9 +32,9 @@ export default function FlowActionButtons(props) {
             type="primary"
             ghost
             onClick={onAgree}
-            // disabled={
-            //   !canApprove || data.completeFlag || data.approveFlag === false
-            // }
+            disabled={
+              !canApprove || data.completeFlag || data.approveFlag === false
+            }
           >
             同意
           </Button>
