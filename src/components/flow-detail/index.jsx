@@ -204,7 +204,7 @@ export default function FlowDetail(props) {
           ...values,
         },
       });
-      let msg = res?.data?.data;
+      let msg = res?.data?.data;``
       message.success(msg);
       form.resetFields();
       setRemark("");
