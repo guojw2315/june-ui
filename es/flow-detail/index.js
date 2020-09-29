@@ -232,6 +232,7 @@ export default function FlowDetail(props) {
 
             case 3:
               values = _context3.sent;
+              console.log(values);
               modal.confirm(_objectSpread(_objectSpread({}, _modalConfig()), {}, {
                 content: "同意该流程?",
                 onOk: function onOk() {
@@ -270,20 +271,20 @@ export default function FlowDetail(props) {
                   }());
                 }
               }));
-              _context3.next = 10;
+              _context3.next = 11;
               break;
 
-            case 7:
-              _context3.prev = 7;
+            case 8:
+              _context3.prev = 8;
               _context3.t0 = _context3["catch"](0);
               console.log(_context3.t0);
 
-            case 10:
+            case 11:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, null, [[0, 7]]);
+      }, _callee3, null, [[0, 8]]);
     }));
 
     return function _onOk() {
@@ -385,6 +386,7 @@ export default function FlowDetail(props) {
             case 4:
               res = _context6.sent;
               msg = res === null || res === void 0 ? void 0 : (_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.data;
+              "";
 
               _message.success(msg);
 
@@ -395,17 +397,17 @@ export default function FlowDetail(props) {
 
               return _context6.abrupt("return", Promise.resolve());
 
-            case 13:
-              _context6.prev = 13;
+            case 14:
+              _context6.prev = 14;
               _context6.t0 = _context6["catch"](0);
               return _context6.abrupt("return", Promise.reject(_context6.t0));
 
-            case 16:
+            case 17:
             case "end":
               return _context6.stop();
           }
         }
-      }, _callee6, null, [[0, 13]]);
+      }, _callee6, null, [[0, 14]]);
     }));
 
     return function _postApprove(_x6, _x7) {
@@ -439,6 +441,7 @@ export default function FlowDetail(props) {
 
   var _renderApprove = function _renderApprove() {
     if (typeof renderApprove === "function") return renderApprove();
+    var hideNodeSelect = tasks.length <= 1;
     return /*#__PURE__*/React.createElement("div", {
       className: "flow-approve-detault"
     }, /*#__PURE__*/React.createElement(_Form, _extends({
@@ -456,15 +459,18 @@ export default function FlowDetail(props) {
       name: "flow-detail-default",
       onValuesChange: _onRemarkChange
     }), /*#__PURE__*/React.createElement(_Form.Item, {
+      style: {
+        display: hideNodeSelect ? 'none' : ''
+      },
       label: "\u6D41\u7A0B\u8282\u70B9",
       name: "taskId",
       rules: [{
-        required: true,
+        required: !hideNodeSelect,
         message: "请选择流程节点"
       }]
     }, /*#__PURE__*/React.createElement(_Select, {
       // mode="multiple"
-      disabled: tasks.length <= 1,
+      disabled: hideNodeSelect,
       placeholder: "\u9009\u62E9\u6D41\u7A0B\u8282\u70B9" // onChange={onChange}
 
     }, tasks === null || tasks === void 0 ? void 0 : tasks.map(function (d, i) {

@@ -1,1 +1,1 @@
-{"version":3,"sources":["../../src/components/alert/index.js"],"names":["Alert"],"mappings":"AAAA,OAAOA,KAAP,MAAkB,SAAlB;AAEA,eAAeA,KAAf","sourcesContent":["import Alert from './alert';\r\n\r\nexport default Alert;"],"file":"index.js"}
+{"version":3,"sources":["../../src/components/alert/index.js"],"names":["Alert"],"mappings":"AAAA,OAAOA,KAAP,MAAkB,SAAlB;AAEA,eAAeA,KAAf","sourcesContent":["import Alert from './alert';\n\nexport default Alert;"],"file":"index.js"}

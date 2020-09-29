@@ -60,12 +60,8 @@ export default function FlowList(props) {
 
   });
 
-  var tabs = useRef([{
-    name: "全部",
-    key: "all",
-    total: 0,
-    value: 0
-  }, {
+  var tabs = useRef([// { name: "全部", key: "all", total: 0, value: 0 },
+  {
     name: "待审批",
     key: "wait",
     total: 0
@@ -73,11 +69,8 @@ export default function FlowList(props) {
     name: "已审批",
     key: "accept",
     total: 0
-  }, {
-    name: "已完结",
-    key: "done",
-    total: 0
-  }]);
+  } // { name: "已完结", key: "done", total: 0 },
+  ]);
   var el = useRef();
 
   var _Form$useForm = _Form.useForm(),
@@ -229,70 +222,86 @@ export default function FlowList(props) {
   };
 
   var _renderContent = function _renderContent() {
-    if (typeof props.renderContent === "function") return props.renderContent(props);
-    var column1 = [{
-      title: "状态",
-      dataIndex: "stateDesc",
-      key: "stateDesc",
-      width: 100
-    }, {
-      title: "发起人",
-      dataIndex: "createdBy",
-      key: "createdBy",
-      width: 100
-    }, {
-      title: "审批节点",
-      dataIndex: "currentNodeNames",
-      key: "currentNodeNames",
-      width: 200
-    }, {
+    if (typeof props.renderContent === "function") return props.renderContent(props); // const column1 = [
+    //   {
+    //     title: "状态",
+    //     dataIndex: "stateDesc",
+    //     key: "stateDesc",
+    //     width: 100,
+    //   },
+    //   {
+    //     title: "发起人",
+    //     dataIndex: "createdBy",
+    //     key: "createdBy",
+    //     width: 100,
+    //   },
+    //   {
+    //     title: "审批节点",
+    //     dataIndex: "currentNodeNames",
+    //     key: "currentNodeNames",
+    //     width: 200,
+    //   },
+    //   {
+    //     title: "审批人",
+    //     dataIndex: "auditorNames",
+    //     key: "auditorNames",
+    //     width: 200,
+    //   },
+    //   {
+    //     title: "流程发起时间",
+    //     dataIndex: "procCreateTime",
+    //     key: "procCreateTime",
+    //     width: 200,
+    //   },
+    //   {
+    //     title: "任务创建时间",
+    //     dataIndex: "currentFirstTaskCreatedTime",
+    //     key: "currentFirstTaskCreatedTime",
+    //     width: 200,
+    //   },
+    //   {
+    //     title: "结束日期",
+    //     dataIndex: "procEndTime",
+    //     key: "procEndTime",
+    //     width: 200,
+    //   },
+    // ];
+
+    var column2 = [{
       title: "审批人",
-      dataIndex: "auditorNames",
-      key: "auditorNames",
-      width: 200
+      dataIndex: "auditorUserNames",
+      key: "auditorUserNames",
+      width: 110
     }, {
-      title: "流程发起时间",
+      title: "流程创建日期",
       dataIndex: "procCreateTime",
       key: "procCreateTime",
       width: 200
     }, {
-      title: "任务创建时间",
-      dataIndex: "currentFirstTaskCreatedTime",
-      key: "currentFirstTaskCreatedTime",
-      width: 200
-    }, {
-      title: "结束日期",
-      dataIndex: "procEndTime",
-      key: "procEndTime",
+      title: "任务创建日期",
+      dataIndex: "taskCreateTime",
+      key: "taskCreateTime",
       width: 200
     }];
-    var column2 = [{
-      title: "处理人姓名",
-      dataIndex: "auditorUserNames",
-      key: "auditorUserNames",
-      width: 100,
-      render: function render(text, record) {
-        return (record === null || record === void 0 ? void 0 : record.auditorUserNames) || (record === null || record === void 0 ? void 0 : record.assigneeUserName);
-      }
+    var column3 = [{
+      title: "审批人",
+      dataIndex: "auditorNames",
+      key: "auditorNames",
+      width: 110
     }, {
-      title: "业务的key",
-      dataIndex: "businessKey",
-      key: "businessKey",
+      title: "流程创建日期",
+      dataIndex: "procCreateTime",
+      key: "procCreateTime",
       width: 200
     }, {
-      title: "创建日期",
+      title: "任务创建日期",
       dataIndex: "taskCreateTime",
       key: "taskCreateTime",
       width: 200
     }, {
-      title: "完成日期",
-      dataIndex: "taskEndDate",
-      key: "taskEndDate",
-      width: 200
-    }, {
-      title: "流程Key",
-      dataIndex: "procDefKey",
-      key: "procDefKey",
+      title: "流程结束日期",
+      dataIndex: "procEndDate",
+      key: "procEndDate",
       width: 200
     }];
 
@@ -306,6 +315,16 @@ export default function FlowList(props) {
         dataIndex: "title",
         key: "title",
         width: 200
+      }, {
+        title: "创建人",
+        dataIndex: "createdByName",
+        key: "createdByName",
+        width: 110
+      }, {
+        title: "审批节点",
+        dataIndex: "taskName",
+        key: "taskName",
+        width: 180
       }].concat(col, [{
         title: "操作",
         dataIndex: "",
@@ -328,9 +347,9 @@ export default function FlowList(props) {
 
     return /*#__PURE__*/React.createElement("div", {
       className: "flow-list-main"
-    }, active === "all" || active === "done" ? /*#__PURE__*/React.createElement(CommonTable, {
-      rowKey: "procInstId",
-      columns: columns(column1),
+    }, active === "wait" ? /*#__PURE__*/React.createElement(CommonTable, {
+      rowKey: "taskId",
+      columns: columns(column2),
       request: request,
       queryParams: searchParams,
       api: function api(_temp2) {
@@ -341,9 +360,9 @@ export default function FlowList(props) {
         return _listApi.current[active](page, size);
       },
       afterFetchData: _afterFetchData
-    }) : null, active === "wait" || active === "accept" ? /*#__PURE__*/React.createElement(CommonTable, {
+    }) : null, active === "accept" ? /*#__PURE__*/React.createElement(CommonTable, {
       rowKey: "taskId",
-      columns: columns(column2),
+      columns: columns(column3),
       request: request,
       queryParams: searchParams,
       api: function api(_temp3) {
