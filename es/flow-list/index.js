@@ -268,6 +268,11 @@ export default function FlowList(props) {
     // ];
 
     var column2 = [{
+      title: "审批节点",
+      dataIndex: "taskName",
+      key: "taskName",
+      width: 180
+    },, {
       title: "审批人",
       dataIndex: "auditorUserNames",
       key: "auditorUserNames",
@@ -284,6 +289,16 @@ export default function FlowList(props) {
       width: 200
     }];
     var column3 = [{
+      title: "状态",
+      dataIndex: "stateDesc",
+      key: "stateDesc",
+      width: 100
+    }, {
+      title: "审批节点",
+      dataIndex: "taskName",
+      key: "taskName",
+      width: 180
+    }, {
       title: "审批人",
       dataIndex: "auditorNames",
       key: "auditorNames",
@@ -320,11 +335,6 @@ export default function FlowList(props) {
         dataIndex: "createdByName",
         key: "createdByName",
         width: 110
-      }, {
-        title: "审批节点",
-        dataIndex: "taskName",
-        key: "taskName",
-        width: 180
       }].concat(col, [{
         title: "操作",
         dataIndex: "",

@@ -1,14 +1,14 @@
-.flow-action-buttons {
-  display: flex;
-  margin-top: 16px;
-  justify-content: flex-end;
-}
-
 .june-alert {
   padding: 20px;
   background: white;
   border-radius: 3px;
   color: white;
+}
+
+.flow-action-buttons {
+  display: flex;
+  margin-top: 16px;
+  justify-content: flex-end;
 }
 
 .flow-detail {
@@ -103,7 +103,6 @@
   box-shadow: -1px 0 0 transparent;
 }
 
-
 .flow-record .flow-record-item {
   position: relative;
   display: flex;
@@ -190,6 +189,7 @@
 .flow-record .flow-record-item .flow-attachments-link:nth-last-child(1) {
   margin-bottom: 0;
 }
+
 
 #flow_container .needs-discussion:not(.djs-connection) .djs-visual > :nth-child(1) {
   stroke: rgba(66, 180, 21, 0.7) !important;

@@ -179,6 +179,12 @@ export default function FlowList(props) {
 
     const column2 = [
       {
+        title: "审批节点",
+        dataIndex: "taskName",
+        key: "taskName",
+        width: 180,
+      },,
+      {
         title: "审批人",
         dataIndex: "auditorUserNames",
         key: "auditorUserNames",
@@ -199,6 +205,18 @@ export default function FlowList(props) {
     ];
 
     const column3 = [
+      {
+        title: "状态",
+        dataIndex: "stateDesc",
+        key: "stateDesc",
+        width: 100,
+      },
+      {
+        title: "审批节点",
+        dataIndex: "taskName",
+        key: "taskName",
+        width: 180,
+      },
       {
         title: "审批人",
         dataIndex: "auditorNames",
@@ -238,12 +256,7 @@ export default function FlowList(props) {
         key: "createdByName",
         width: 110,
       },
-      {
-        title: "审批节点",
-        dataIndex: "taskName",
-        key: "taskName",
-        width: 180,
-      },
+      
       ...col,
       {
         title: "操作",
