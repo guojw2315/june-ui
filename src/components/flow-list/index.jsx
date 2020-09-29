@@ -87,10 +87,10 @@ export default function FlowList(props) {
       tab.total = total;
     }
 
-    // 设置全部 未审批数量
-    if (active === "wait") {
-      tabs.current[0].value = total;
-    }
+    // // 设置全部 未审批数量
+    // if (active === "wait") {
+    //   tabs.current[0].value = total;
+    // }
 
     setRowKey(/^wait$|^accept$/g.test(active) ? "taskId" : "procInstId");
     setUpdate(new Date().getTime());
