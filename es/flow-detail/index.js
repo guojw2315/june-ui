@@ -30,6 +30,7 @@ import "./style/index";
 import { FullscreenOutlined, FullscreenExitOutlined } from "@ant-design/icons";
 export default function FlowDetail(props) {
   var onTabChange = props.onTabChange,
+      onReqSuccess = props.onReqSuccess,
       renderTabs = props.renderTabs,
       renderApprove = props.renderApprove,
       renderInfo = props.renderInfo,
@@ -45,7 +46,7 @@ export default function FlowDetail(props) {
       tabs = _props$tabs === void 0 ? [] : _props$tabs,
       _props$tabProps = props.tabProps,
       tabProps = _props$tabProps === void 0 ? {} : _props$tabProps,
-      rest = _objectWithoutPropertiesLoose(props, ["onTabChange", "renderTabs", "renderApprove", "renderInfo", "renderHeader", "TabsComponent", "onOkSuccess", "onRejectSuccess", "onTransferSuccess", "data", "id", "request", "tabs", "tabProps"]);
+      rest = _objectWithoutPropertiesLoose(props, ["onTabChange", "onReqSuccess", "renderTabs", "renderApprove", "renderInfo", "renderHeader", "TabsComponent", "onOkSuccess", "onRejectSuccess", "onTransferSuccess", "data", "id", "request", "tabs", "tabProps"]);
 
   var _useState = useState(false),
       fullScreen = _useState[0],
@@ -139,7 +140,7 @@ export default function FlowDetail(props) {
           switch (_context.prev = _context.next) {
             case 0:
               if (!request) {
-                _context.next = 20;
+                _context.next = 21;
                 break;
               }
 
@@ -155,7 +156,8 @@ export default function FlowDetail(props) {
             case 6:
               res = _context.sent;
               d = res === null || res === void 0 ? void 0 : (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data;
-              setDetailData(d); // console.log(d?.runTimeTasks?.filter((item) => item.approveFlag))
+              setDetailData(d);
+              onReqSuccess && onReqSuccess(); // console.log(d?.runTimeTasks?.filter((item) => item.approveFlag))
 
               _task = (d === null || d === void 0 ? void 0 : (_d$runTimeTasks = d.runTimeTasks) === null || _d$runTimeTasks === void 0 ? void 0 : _d$runTimeTasks.filter(function (item) {
                 return item.approveFlag;
@@ -168,25 +170,25 @@ export default function FlowDetail(props) {
               }
 
               setTasks(_task);
-              _context.next = 17;
+              _context.next = 18;
               break;
 
-            case 14:
-              _context.prev = 14;
+            case 15:
+              _context.prev = 15;
               _context.t0 = _context["catch"](1);
               console.log(_context.t0);
 
-            case 17:
-              _context.prev = 17;
+            case 18:
+              _context.prev = 18;
               setLoading(false);
-              return _context.finish(17);
+              return _context.finish(18);
 
-            case 20:
+            case 21:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 14, 17, 20]]);
+      }, _callee, null, [[1, 15, 18, 21]]);
     }));
 
     return function _fetchData(_x) {
