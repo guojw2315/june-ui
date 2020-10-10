@@ -30,6 +30,7 @@ import { FullscreenOutlined, FullscreenExitOutlined } from "@ant-design/icons";
 export default function FlowDetail(props) {
   const {
     onTabChange,
+    onReqSuccess,
     renderTabs,
     renderApprove,
     renderInfo,
@@ -108,6 +109,7 @@ export default function FlowDetail(props) {
         let res = await request({ method: "GET", url });
         let d = res?.data?.data;
         setDetailData(d);
+        onReqSuccess && onReqSuccess()
         // console.log(d?.runTimeTasks?.filter((item) => item.approveFlag))
         let _task = d?.runTimeTasks?.filter((item) => item.approveFlag) || []
         if (_task.length === 1) {
