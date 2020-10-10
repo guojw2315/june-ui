@@ -157,7 +157,7 @@ export default function FlowDetail(props) {
               res = _context.sent;
               d = res === null || res === void 0 ? void 0 : (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data;
               setDetailData(d);
-              onReqSuccess && onReqSuccess(); // console.log(d?.runTimeTasks?.filter((item) => item.approveFlag))
+              onReqSuccess && onReqSuccess(d); // console.log(d?.runTimeTasks?.filter((item) => item.approveFlag))
 
               _task = (d === null || d === void 0 ? void 0 : (_d$runTimeTasks = d.runTimeTasks) === null || _d$runTimeTasks === void 0 ? void 0 : _d$runTimeTasks.filter(function (item) {
                 return item.approveFlag;

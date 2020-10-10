@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["alert/style/index.less"],"sourcesContent":["@popupPrefix: june-alert;\n\n.@{popupPrefix} {\n  padding: 20px;\n  background: white;\n  border-radius: 3px;\n  color: white;\n}"],"file":"index.less"}

@@ -109,7 +109,7 @@ export default function FlowDetail(props) {
         let res = await request({ method: "GET", url });
         let d = res?.data?.data;
         setDetailData(d);
-        onReqSuccess && onReqSuccess()
+        onReqSuccess && onReqSuccess(d)
         // console.log(d?.runTimeTasks?.filter((item) => item.approveFlag))
         let _task = d?.runTimeTasks?.filter((item) => item.approveFlag) || []
         if (_task.length === 1) {

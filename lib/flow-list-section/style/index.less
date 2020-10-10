@@ -1,0 +1,38 @@
+
+.flow-list-header {
+  display: flex;
+  
+  .col-expanded {
+    flex: 1;
+  }
+}
+
+.flow-list {
+  padding: 24px;
+  background-color: #fff;
+  .flow-search-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+  }
+}
+
+.flow-list-main {
+  .rc-table-content,
+  .rc-table th, .rc-table td {
+    border: 0;
+  }
+
+  .rc-table-row  {
+    &:hover {
+      td {
+        background-color:rgba(87, 138, 236, 0.15);
+      }
+    }
+  }
+
+  .rc-table-cell-fix-right-first, 
+  .rc-table-cell-fix-right-last {
+    box-shadow: -1px 0 0 transparent;
+  }
+}
